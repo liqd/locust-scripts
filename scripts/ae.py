@@ -1,10 +1,14 @@
 from enum import Enum
+from faker import Faker
 from locust import HttpLocust, TaskSet, task
 from pyquery import PyQuery
 import random
 import json
 
 from credz import USER_CREDENTIALS
+
+
+fake = Faker()
 
 
 class PageType(Enum):
@@ -99,9 +103,121 @@ class AeContributor(TaskSet):
             alertbox = pq("p").filter(".alert-danger")
             assert(not alertbox)
 
+    def _submit(self, data):
+        with self.client.post(
+            "/ideas/create/module/ideas2017/",
+            data=data,
+            catch_response=True) as r:
+
+            pq = PyQuery(r.content)
+            errorblock = pq("span").filter(".error-block")
+            assert(not errorblock)
+
+    def _submit_step_zero(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "0",
+            "0-first_name": fake.first_name(),
+            "0-last_name": fake.last_name(),
+            "0-organisation_status": "other",
+            "0-organisation_status_extra": fake.word(),
+            "0-organisation_name": "",
+            "0-organisation_website": "",
+            "0-organisation_country": "",
+            "0-organisation_city": "",
+            "0-contact_email": "",
+            "0-year_of_registration": "",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken']
+        }
+        self._submit(data)
+
+    def _submit_step_one(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "1",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
+            "1-partner_organisation_1_name": "",
+            "1-partner_organisation_1_website": "",
+            "1-partner_organisation_1_country": "",
+            "1-partner_organisation_2_name": "",
+            "1-partner_organisation_2_website": "",
+            "1-partner_organisation_2_country": "",
+            "1-partner_organisation_3_name": "",
+            "1-partner_organisation_3_website": "",
+            "1-partner_organisation_3_country": "",
+            "1-partners_more_info": "",
+        }
+        self._submit(data)
+
+    def _submit_step_two(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "2",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
+            "2-idea_title": fake.sentence(nb_words=4),
+            "2-idea_subtitle": fake.sentence(nb_words=6),
+            "2-idea_pitch": fake.text(max_nb_chars=200),
+            "2-idea_topics": random.choice([
+                    "migration",
+                    "education",
+                    "communities",
+                    "environment"
+            ]),
+            "2-idea_topics_other": "",
+            "2-idea_location": "online",
+            "2-idea_location_specify": "",
+            "2-idea_location_ruhr": ""
+        }
+        self._submit(data)
+
+    def _submit_step_three(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "3",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
+            "3-challenge": fake.sentence(nb_words=10),
+            "3-outcome": fake.sentence(nb_words=10),
+            "3-plan": fake.sentence(nb_words=10),
+            "3-importance": fake.sentence(nb_words=10),
+            "3-target_group": fake.sentence(nb_words=10),
+            "3-members": fake.word()
+        }
+        self._submit(data)
+
+    def _submit_step_four(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "4",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
+            "4-idea_challenge_camp_represent": fake.name(),
+            "4-idea_challenge_camp_benefit": fake.sentence(nb_words=10)
+        }
+        self._submit(data)
+
+    def _submit_step_five(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "5",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
+            "5-co_workers_emails": "",
+            "5-reach_out": "",
+            "5-how_did_you_hear": "personal_contact",
+            "5-confirm_publicity": "on",
+            "5-confirm_idea_challenge_camp": "on",
+            "5-accept_conditions": "on"
+        }
+        self._submit(data)
+
+    def _submit_step_six(self):
+        data = {
+            "idea_sketch_create_wizard-current_step": "6",
+            "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
+        }
+        self._submit(data)
+
+    @task(100)
     def submit_idea(self):
-        # TODO
-        pass
+        self._submit_step_zero()
+        self._submit_step_one()
+        self._submit_step_two()
+        self._submit_step_three()
+        self._submit_step_four()
+        self._submit_step_five()
+        self._submit_step_six()
 
 
 class AeFeedbacker(TaskSet):
@@ -206,9 +322,10 @@ class AeFeedbacker(TaskSet):
 
 class AeBrowser(TaskSet):
     tasks = {
-        AeFeedbacker: 10,
+        AeContributor: 2,
+        AeFeedbacker: 5,
         surf_ideaspace: 30,
-        load_page: 5
+        load_page: 20
     }
 
     def on_start(self):
