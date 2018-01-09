@@ -93,20 +93,25 @@ class AeContributor(TaskSet):
         user, pwd = USER_CREDENTIALS.pop()
         print("logging in as {}".format(user))
 
+        header = { "Referer": r.url }
+
         with self.client.post("/accounts/login/", data={
                 "csrfmiddlewaretoken": csrf,
                 "login": user,
                 "password": pwd
-                }, catch_response=True) as r:
+                }, catch_response=True, headers=header) as r:
 
             pq = PyQuery(r.content)
             alertbox = pq("p").filter(".alert-danger")
             assert(not alertbox)
 
     def _submit(self, data):
+        header = { "Referer": self.client.base_url }
+
         with self.client.post(
             "/ideas/create/module/ideas2017/",
             data=data,
+            headers=header,
             catch_response=True) as r:
 
             pq = PyQuery(r.content)
