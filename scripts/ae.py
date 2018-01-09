@@ -90,7 +90,7 @@ class AeContributor(TaskSet):
         if not USER_CREDENTIALS:
             self.interrupt()
 
-        user, pwd = USER_CREDENTIALS.pop()
+        user, pwd = random.choice(USER_CREDENTIALS)
         print("logging in as {}".format(user))
 
         header = { "Referer": r.url }
@@ -381,4 +381,4 @@ class AeBrowser(TaskSet):
 class WebsiteUser(HttpLocust):
     # to call via
     #   $ locust -f locustfile.py --host <host>
-    task_set = AeBrowser
+    task_set = AeContributor
