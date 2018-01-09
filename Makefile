@@ -7,12 +7,12 @@ install:
 run_ae-stage:
 	$(VIRTUAL_ENV)/bin/locust \
     --locustfile scripts/ae.py \
-    --host http://ae-stage.liqd.net
+    --host https://ae-stage.liqd.net
 
 run_ae-dev:
 	$(VIRTUAL_ENV)/bin/locust \
     --locustfile scripts/ae.py \
-    --host http://ae-dev.liqd.net
+    --host https://ae-dev.liqd.net
 
 run_ae-localhost:
 	$(VIRTUAL_ENV)/bin/locust \
