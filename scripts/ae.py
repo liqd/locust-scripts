@@ -189,8 +189,8 @@ class AeContributor(TaskSet):
         data = {
             "idea_sketch_create_wizard-current_step": "4",
             "csrfmiddlewaretoken": self.client.cookies['csrftoken'],
-            "4-idea_challenge_camp_represent": fake.name(),
-            "4-idea_challenge_camp_benefit": fake.sentence(nb_words=10)
+            "4-collaboration_camp_represent": fake.name(),
+            "4-collaboration_camp_benefit": fake.sentence(nb_words=10)
         }
         self._submit(data)
 
@@ -202,7 +202,7 @@ class AeContributor(TaskSet):
             "5-reach_out": "",
             "5-how_did_you_hear": "personal_contact",
             "5-confirm_publicity": "on",
-            "5-confirm_idea_challenge_camp": "on",
+            "5-confirm_collaboration_camp": "on",
             "5-accept_conditions": "on"
         }
         self._submit(data)
