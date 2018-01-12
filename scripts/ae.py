@@ -84,7 +84,7 @@ class AeContributor(TaskSet):
         self.login()
 
     def login(self):
-        self.client.get("/accounts/login")
+        r = self.client.get("/accounts/login/")
         csrf = self.client.cookies['csrftoken']
 
         if not USER_CREDENTIALS:
