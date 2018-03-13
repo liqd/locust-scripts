@@ -5,5 +5,7 @@ are some scripts to perform load testing.
 
 ```
 make install
-make run_ae
+make run_ae-dev
+make run_ae-stage
+make run_ae-localhost
 ```
