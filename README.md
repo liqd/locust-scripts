@@ -6,6 +6,8 @@ are some scripts to perform load testing.
 ```
 make install
 make run_ae-dev
-make run_ae-stage
-make run_ae-localhost
+or make run_ae-stage
+or make run_ae-localhost
+
+open http://localhost:8089/ in your browser
 ```
