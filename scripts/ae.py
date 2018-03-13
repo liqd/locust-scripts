@@ -74,7 +74,7 @@ def load_page(l):
         elif pagetype == PageType.IDEA:
             _process_idea(l, r.content)
 
-    except IndexError:
+    except (IndexError, ValueError):
         pass
 
 
