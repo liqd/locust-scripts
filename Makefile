@@ -37,4 +37,14 @@ run_berlin-localhost:
 run_spd-dev:
 	$(VIRTUAL_ENV)/bin/locust \
     --locustfile scripts/spd.py \
-    --host https://dev-engage-web-spd.spd16.spddev.de/
+    --host https://dev-engage-web-spd.spd16.spddev.de
+
+run_spd-stg:
+	$(VIRTUAL_ENV)/bin/locust \
+    --locustfile scripts/spd.py \
+    --host https://stg-engage-web-spd.spd16.spddev.de
+
+run_spd-prod:
+	$(VIRTUAL_ENV)/bin/locust \
+    --locustfile scripts/spd.py \
+    --host https://debattenportal.spd.de
