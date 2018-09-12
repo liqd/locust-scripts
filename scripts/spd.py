@@ -4,8 +4,11 @@ from locust import HttpLocust, TaskSet, task
 from pyquery import PyQuery
 import random
 import json
+import resource
 
 from credz import USER_CREDENTIALS
+
+resource.setrlimit(resource.RLIMIT_NOFILE, (999999, 999999)) # fix "Too many open files" error
 
 class SPDBrowser(TaskSet):
 
