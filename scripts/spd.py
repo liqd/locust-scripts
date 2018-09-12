@@ -39,39 +39,39 @@ class SPDBrowser(TaskSet):
         self.client.get("admin/logout/")
 
     @task(50)
-    def index(self):
+    def step_1(self):
         self.client.get("/")
 
     @task(49)
-    def index(self):
+    def step_2(self):
         self.login()
 
     @task(48)
-    def index(self):
+    def step_3(self):
         self.client.get("/")
 
     @task(47)
-    def index(self):
+    def step_4(self):
         self.client.get("project-page-title-1/")
 
     @task(46)
-    def index(self):
+    def step_5(self):
         self.client.get("questions/6/")
 
     @task(45)
-    def index(self):
+    def step_6(self):
         self.client.get("project-page-title-1/")
 
     @task(44)
-    def index(self):
+    def step_7(self):
         self.client.get("debattencamp/")
 
     @task(43)
-    def index(self):
+    def step_8(self):
         self.client.get("statements/online-und-offline-der-parteiarbeit-besser-verbind/")
 
     @task(42)
-    def index(self):
+    def step_9(self):
         self.logout()
 
 class WebsiteUser(HttpLocust):
