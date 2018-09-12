@@ -33,3 +33,8 @@ run_berlin-localhost:
 	$(VIRTUAL_ENV)/bin/locust \
     --locustfile scripts/meinberlin.py \
     --host http://127.0.0.1:8000
+
+run_spd-dev:
+	$(VIRTUAL_ENV)/bin/locust \
+    --locustfile scripts/spd.py \
+    --host https://dev-engage-web-spd.spd16.spddev.de/
