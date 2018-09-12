@@ -17,7 +17,7 @@ class SPDBrowser(TaskSet):
         self.objectIds = []
 
     def login(self):
-        r = self.client.get("django-admin/")
+        r = self.client.get("/django-admin/")
         csrf = self.client.cookies['csrftoken']
 
         if not USER_CREDENTIALS:
@@ -28,7 +28,7 @@ class SPDBrowser(TaskSet):
 
         header = { "Referer": r.url }
 
-        with self.client.post("django-admin/", data={
+        with self.client.post("/django-admin/", data={
                 "csrfmiddlewaretoken": csrf,
                 "username": user,
                 "password": pwd
@@ -39,7 +39,7 @@ class SPDBrowser(TaskSet):
             assert(not alertbox)
 
     def logout(self):
-        self.client.get("admin/logout/")
+        self.client.get("/admin/logout/")
 
     @task(50)
     def step_1(self):
@@ -55,23 +55,23 @@ class SPDBrowser(TaskSet):
 
     @task(47)
     def step_4(self):
-        self.client.get("project-page-title-1/")
+        self.client.get("/project-page-title-1/")
 
     @task(46)
     def step_5(self):
-        self.client.get("questions/6/")
+        self.client.get("/questions/6/")
 
     @task(45)
     def step_6(self):
-        self.client.get("project-page-title-1/")
+        self.client.get("/project-page-title-1/")
 
     @task(44)
     def step_7(self):
-        self.client.get("debattencamp/")
+        self.client.get("/debattencamp/")
 
     @task(43)
     def step_8(self):
-        self.client.get("statements/online-und-offline-der-parteiarbeit-besser-verbind/")
+        self.client.get("/statements/online-und-offline-der-parteiarbeit-besser-verbind/")
 
     @task(42)
     def step_9(self):
