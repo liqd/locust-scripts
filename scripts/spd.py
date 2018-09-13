@@ -18,6 +18,14 @@ class SPDBrowser(TaskSet):
 
     def login(self):
         r = self.client.get("/django-admin/")
+        try:
+            if not r.ok:
+                print("login request not ok")
+                return
+        except:
+            print("login aborted due to error")
+            return
+
         csrf = self.client.cookies['csrftoken']
 
         if not USER_CREDENTIALS:
