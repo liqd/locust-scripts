@@ -24,7 +24,6 @@ class SPDBrowser(TaskSet):
             self.interrupt()
 
         user, pwd = random.choice(USER_CREDENTIALS)
-        print("logging in as {}".format(user))
 
         header = { "Referer": r.url }
 
