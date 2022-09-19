@@ -50,11 +50,11 @@ class MeinBerlinBrowser(TaskSet):
 
     @task(1)
     def terms(self):
-        self.client.get("/datenschutz")
+        self.client.get("/datenschutzerklärung")
 
     @task(1)
     def terms(self):
-        self.client.get("/terms-of-use")
+        self.client.get("/nutzungsbedingungen")
 
     @task(1)
     def login(self):
