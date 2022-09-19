@@ -64,6 +64,10 @@ class MeinBerlinBrowser(TaskSet):
     def register(self):
         self.client.get("/accounts/signup")
 
+    @task(1)
+    def error_page(self):
+        self.client.get("/thisisvoid")
+
 
 class WebsiteUser(HttpUser):
     # to call via
