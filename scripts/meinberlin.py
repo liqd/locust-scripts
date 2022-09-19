@@ -1,6 +1,6 @@
 from enum import Enum
 from faker import Faker
-from locust import HttpLocust, TaskSet, task
+from locust import HttpUser, TaskSet, task
 from pyquery import PyQuery
 import random
 import json
@@ -65,7 +65,7 @@ class MeinBerlinBrowser(TaskSet):
         self.client.get("/accounts/signup")
 
 
-class WebsiteUser(HttpLocust):
+class WebsiteUser(HttpUser):
     # to call via
     #   $ locust -f locustfile.py --host <host>
-    task_set = MeinBerlinBrowser
+    tasks = [MeinBerlinBrowser]
