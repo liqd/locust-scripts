@@ -21,4 +21,4 @@ berlin-dev:
 berlin-local:
 	$(VIRTUAL_ENV)/bin/locust \
     --locustfile scripts/meinberlin.py \
-    --host http://127.0.0.1:8000
+    --host http://127.0.0.1:8003
